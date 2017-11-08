@@ -1,6 +1,6 @@
 {
   "name": "homebridge-rcswitch",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "Use the RCSwitch library in homebridge",
   "author": "Niklas Riekenbrauck <nikriek@gmail.com>",
   "bugs": {
