@@ -4,9 +4,10 @@
 {
   "platform": "RCSwitch",
   "pin": 0,
-  "switches": [
+  "switches": [{
+    "name": "Backlight"
     "group": 1,
     "switch": 2
-  ]
+  }]
 }
 ```
