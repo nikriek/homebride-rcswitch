@@ -1,0 +1,18 @@
+{
+  "name": "homebridge-rcswitch",
+  "version": "0.1",
+  "description": "Use the RCSwitch library in homebridge",
+  "author": "Niklas Riekenbrauck <nikriek@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/nikriek/homebride-rcswitch/issues"
+  },
+  "keywords": [
+  ],
+  "dependencies": {
+    "rcswitch": "0.3.1"
+  }
+  "preferGlobal": true,
+  "private": true,
+  "analyze": true,
+  "license": "MIT"
+}
