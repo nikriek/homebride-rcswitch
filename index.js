@@ -8,7 +8,7 @@ module.exports = function(homebridge) {
   Characteristic = homebridge.hap.Characteristic;
   UUIDGen = homebridge.hap.uuid;
   
-  homebridge.registerPlatform("homebridge-rcswitch", "RCSwitch", Platform, true);
+  homebridge.registerPlatform("homebridge-rcswitch", "RCSwitch", Platform, false);
 }
 
 function Platform(log, config, api) {
