@@ -11,5 +11,9 @@
   "dependencies": {
     "rcswitch": "0.3.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=5.0.0",
+    "homebridge": ">=0.4.5"
+  }
 }
