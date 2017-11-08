@@ -16,10 +16,8 @@ function Platform(log, config, api) {
   this.config = config;
   this.api = api;
   this.pin = config.pin'pin'] || 0;
-  this.name = config['name'];
-  this.group = config['group'];
-  this.switch = config['switch'];
-  this.isOn = false;
+  this.switches = config.switches
+  this.switchStates = Array(this.switches.length).fill(false);
 }
 
 Platform.prototype.configureAccessory = function (accessory) {
