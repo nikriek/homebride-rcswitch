@@ -19,6 +19,7 @@ function Platform(log, config, api) {
   this.name = config['name'];
   this.group = config['group'];
   this.switch = config['switch'];
+  this.isOn = false;
 }
 
 Platform.prototype.configureAccessory = function (accessory) {
@@ -46,11 +47,16 @@ Platform.prototype.getServices = function () {
 Platform.prototype = {
  
   getSwitchOnCharacteristic: function (next) {
-    next(null, true);
+    next(null, this.isOn);
   },
    
   setSwitchOnCharacteristic: function (on, next) {
-    rcswitch.switchOn(this.group, this.switch)
+    if (this.isOn) {
+      rcswitch.switchOff(this.group, this.switch);
+    } else {
+      rcswitch.switchOn(this.group, this.switch);
+    }
+    this.isOn = !this.isOn;
     next();
   }
 };
