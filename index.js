@@ -21,8 +21,11 @@ function Platform(log, config, api) {
   this.switch = config['switch'];
 }
 
-Platform.prototype = {
-  getServices: function () {
+Platform.prototype.configureAccessory = function (accessory) {
+  rcswitch.enableTransmit(this.pin);
+}
+
+Platform.prototype.getServices = function () {
     let informationService = new Service.AccessoryInformation();
     informationService
       .setCharacteristic(Characteristic.Manufacturer, "RCSwitch")
@@ -38,7 +41,6 @@ Platform.prototype = {
     this.informationService = informationService;
     this.switchService = switchService;
     return [informationService, switchService];
-  }
 };
 
 Platform.prototype = {
