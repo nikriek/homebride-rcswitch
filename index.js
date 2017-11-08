@@ -1,1 +1,1 @@
-
+var rcswitch = require('rcswitch');
