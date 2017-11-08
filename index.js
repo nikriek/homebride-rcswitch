@@ -16,7 +16,7 @@ function Platform(log, config, api) {
   this.config = config;
   this.api = api;
   this.pin = config.pin'pin'] || 0;
-  this.switches = config.switches
+  this.switches = config.switches;
   this.switchStates = Array(this.switches.length).fill(false);
 }
 
@@ -31,19 +31,21 @@ Platform.prototype.getServices = function () {
       .setCharacteristic(Characteristic.Model, "RCSwitch")
       .setCharacteristic(Characteristic.SerialNumber, "123-456-789");
  
-    let switchService = new Service.Switch(this.name);
-    switchService
-      .getCharacteristic(Characteristic.On)
-        .on('get', this.getSwitchOnCharacteristic.bind(this))
-        .on('set', this.setSwitchOnCharacteristic.bind(this));
- 
+    
+    let switchServices = this.switches.map(function(switch) { 
+        let switchService = new Service.Switch(switch.name);
+        switchService
+          .getCharacteristic(Characteristic.On)
+          .on('get', this.getSwitchOnCharacteristic.bind(this))
+          .on('set', this.setSwitchOnCharacteristic.bind(this));
+    });
+       
     this.informationService = informationService;
-    this.switchService = switchService;
-    return [informationService, switchService];
+    this.switchServices = switchServices;
+    return [informationService] + switchServices;
 };
 
 Platform.prototype = {
- 
   getSwitchOnCharacteristic: function (next) {
     next(null, this.isOn);
   },
