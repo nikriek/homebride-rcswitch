@@ -11,8 +11,5 @@
   "dependencies": {
     "rcswitch": "0.3.1"
   },
-  "preferGlobal": true,
-  "private": true,
-  "analyze": true,
   "license": "MIT"
 }
