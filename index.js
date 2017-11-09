@@ -15,7 +15,7 @@ function Platform(log, config, api) {
   this.log = log;
   this.config = config;
   this.api = api;
-  this.pin = config.pin'pin'] || 0;
+  this.pin = config.pin['pin'] || 0;
   this.switches = config.switches;
   this.switchStates = Array(this.switches.length).fill(false);
 }
