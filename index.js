@@ -22,7 +22,7 @@ function Platform(log, config, api) {
 
 Platform.prototype.configureAccessory = function (accessory) {
   rcswitch.enableTransmit(this.pin);
-}
+};
 
 Platform.prototype.getServices = function () {
     let informationService = new Service.AccessoryInformation();
@@ -45,7 +45,7 @@ Platform.prototype.getServices = function () {
 
 Platform.prototype.accessories = function(next) {
   next([]);
-}
+};
 
 Platform.prototype = {
   getSwitchOnCharacteristic: function (index, next) {
