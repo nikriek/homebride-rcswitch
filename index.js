@@ -43,6 +43,10 @@ Platform.prototype.getServices = function () {
     return [informationService] + switchServices;
 };
 
+Platform.prototype.accessories = function(next) {
+  next([]);
+}
+
 Platform.prototype = {
   getSwitchOnCharacteristic: function (index, next) {
     let isOn = this.switchStates[index];
