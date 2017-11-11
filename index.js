@@ -52,11 +52,11 @@ Platform.prototype = {
    
   setSwitchOnCharacteristic: function (index, on, next) {
     let isOn = this.switchStates[index];
-    let switch = this.switches[index];
+    let currentSwitch = this.switches[index];
     if (isOn) {
-      rcswitch.switchOff(switch.group, switch.switch);
+      rcswitch.switchOff(currentSwitch.group, currentSwitch.switch);
     } else {
-      rcswitch.switchOn(switch.group, switch.switch);
+      rcswitch.switchOn(currentSwitch.group, currentSwitch.switch);
     }
     this.switchStates[index] = !isOn;
     next();
