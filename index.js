@@ -18,6 +18,7 @@ function Platform(log, config, api) {
   this.pin = config.pin['pin'] || 0;
   this.switches = config.switches || [];
   this.switchStates = Array(this.switches.length).fill(false);
+  this.accessories = [];
 }
 
 Platform.prototype.configureAccessory = function (accessory) {
@@ -41,10 +42,6 @@ Platform.prototype.getServices = function () {
     this.informationService = informationService;
     this.switchServices = switchServices;
     return [informationService] + switchServices;
-};
-
-Platform.prototype.accessories = function (next) {
-  next([]);
 };
 
 Platform.prototype = {
