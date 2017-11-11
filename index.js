@@ -32,7 +32,7 @@ Platform.prototype.getServices = function () {
       .setCharacteristic(Characteristic.SerialNumber, "123-456-789");
  
     
-    let switchServices = this.switches.map(function(switch, index) { 
+    let switchServices = this.switches.map(function(currentValue, index) { 
         let switchService = new Service.Switch(switch.name);
         return switchService.getCharacteristic(Characteristic.On)
           .on('get', this.getSwitchOnCharacteristic.bind(this, index))
