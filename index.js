@@ -30,7 +30,6 @@ Platform.prototype.getServices = function () {
       .setCharacteristic(Characteristic.Manufacturer, "RCSwitch")
       .setCharacteristic(Characteristic.Model, "RCSwitch")
       .setCharacteristic(Characteristic.SerialNumber, "123-456-789");
- 
     
     let switchServices = this.switches.map(function(currentValue, index) { 
         let switchService = new Service.Switch(currentValue.name);
