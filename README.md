@@ -1,4 +1,9 @@
 # homebridge-rcswitch
+## Installation
+```bash
+$ npm install -g nikriek/homebridge-rcswitch
+```
+
 ## Configuration
 ```json
 {
