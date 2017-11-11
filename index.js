@@ -43,7 +43,7 @@ Platform.prototype.getServices = function () {
     return [informationService] + switchServices;
 };
 
-Platform.prototype.accessories = function(next) {
+Platform.prototype.accessories = function (next) {
   next([]);
 };
 
