@@ -33,7 +33,7 @@ Platform.prototype.getServices = function () {
  
     
     let switchServices = this.switches.map(function(currentValue, index) { 
-        let switchService = new Service.Switch(switch.name);
+        let switchService = new Service.Switch(currentValue.name);
         return switchService.getCharacteristic(Characteristic.On)
           .on('get', this.getSwitchOnCharacteristic.bind(this, index))
           .on('set', this.setSwitchOnCharacteristic.bind(this, index));
