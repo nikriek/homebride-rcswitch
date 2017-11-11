@@ -32,11 +32,11 @@ Platform.prototype.getServices = function () {
       .setCharacteristic(Characteristic.SerialNumber, "123-456-789");
  
     
-    let switchServices = this.switches.map(function(switch) { 
+    let switchServices = this.switches.map(function(switch, index) { 
         let switchService = new Service.Switch(switch.name);
         return switchService.getCharacteristic(Characteristic.On)
-          .on('get', this.getSwitchOnCharacteristic.bind(this))
-          .on('set', this.setSwitchOnCharacteristic.bind(this));
+          .on('get', this.getSwitchOnCharacteristic.bind(this, index))
+          .on('set', this.setSwitchOnCharacteristic.bind(this, index));
     });
        
     this.informationService = informationService;
@@ -45,17 +45,20 @@ Platform.prototype.getServices = function () {
 };
 
 Platform.prototype = {
-  getSwitchOnCharacteristic: function (next) {
-    next(null, this.isOn);
+  getSwitchOnCharacteristic: function (index, next) {
+    let isOn = this.switchStates[index];
+    next(null, isOn);
   },
    
-  setSwitchOnCharacteristic: function (on, next) {
-    if (this.isOn) {
-      rcswitch.switchOff(this.group, this.switch);
+  setSwitchOnCharacteristic: function (index, on, next) {
+    let isOn = this.switchStates[index];
+    let switch = this.switches[index];
+    if (isOn) {
+      rcswitch.switchOff(switch.group, switch.switch);
     } else {
-      rcswitch.switchOn(this.group, this.switch);
+      rcswitch.switchOn(switch.group, switch.switch);
     }
-    this.isOn = !this.isOn;
+    this.switchStates[index] = !isOn;
     next();
   }
 };
