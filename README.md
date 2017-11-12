@@ -1,4 +1,6 @@
 # homebridge-rcswitch
+Operate 433/315Mhz devices using the [RCSwitch](https://github.com/sui77/rc-switch) library in [homebridge](https://github.com/nfarina/homebridge) (Apple Homekit). 
+
 ## Installation
 ```bash
 $ npm install -g nikriek/homebridge-rcswitch
