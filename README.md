@@ -8,7 +8,7 @@ $ npm install -g nikriek/homebridge-rcswitch
 Add your switch as new accessory:
 ```json
 {
-  accessories: [{
+  "accessories": [{
     "accessory": "RCSwitch",
     "pin": 0,
     "name": "Backlight",
