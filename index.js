@@ -8,7 +8,7 @@ module.exports = function(homebridge) {
   Characteristic = homebridge.hap.Characteristic;
   UUIDGen = homebridge.hap.uuid;
   
-  homebridge.registerPlatform("homebridge-rcswitch", "RCSwitch", Platform, true);
+  homebridge.registerPlatform("homebridge-rcswitch", "RCSwitch", Platform, false);
 }
 
 function Platform(log, config, api) {
@@ -18,7 +18,6 @@ function Platform(log, config, api) {
   this.pin = config.pin['pin'] || 0;
   this.switches = config.switches || [];
   this.switchStates = Array(this.switches.length).fill(false);
-  // this.accessories = [];
 }
 
 Platform.prototype.configureAccessory = function (accessory) {
