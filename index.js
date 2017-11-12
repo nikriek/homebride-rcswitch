@@ -8,10 +8,10 @@ module.exports = function(homebridge) {
   Characteristic = homebridge.hap.Characteristic;
   UUIDGen = homebridge.hap.uuid;
   
-  homebridge.registerAccessory("homebridge-rcswitch", "RCSwitch", Platform);
+  homebridge.registerAccessory("homebridge-rcswitch", "RCSwitch", RCSwitch);
 }
 
-function Platform(log, config) {
+function RCSwitch(log, config) {
   this.log = log;
   this.config = config;
   this.pin = config.pin['pin'] || 0;
@@ -23,7 +23,7 @@ function Platform(log, config) {
   rcswitch.enableTransmit(this.pin);
 }
 
-Platform.prototype.getServices = function () {
+RCSwitch.prototype.getServices = function () {
     let informationService = new Service.AccessoryInformation();
     informationService
       .setCharacteristic(Characteristic.Manufacturer, "RCSwitch")
@@ -39,7 +39,7 @@ Platform.prototype.getServices = function () {
     return [informationService, switchService];
 }
 
-Platform.prototype = {
+RCSwitch.prototype = {
   getSwitchOnCharacteristic: function (next) {
     next(null, this.isOn);
   },
