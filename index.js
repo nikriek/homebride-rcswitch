@@ -19,11 +19,7 @@ function Platform(log, config) {
   this.groupId = config['group'];
   this.switchId = config['switch'];
   this.isOn = false;
-  this.configure();
-}
 
-Platform.prototype.configure = function () {
-  this.log("Enable transmit on pin " + this.pin);
   rcswitch.enableTransmit(this.pin);
 
   this.service = new Service.Switch(this.name);
@@ -33,31 +29,12 @@ Platform.prototype.configure = function () {
     .on('set', this.setSwitchOnCharacteristic.bind(this))
 }
 
-// Platform.prototype.getServices = function () {
-//     let informationService = new Service.AccessoryInformation();
-//     informationService
-//       .setCharacteristic(Characteristic.Manufacturer, "RCSwitch")
-//       .setCharacteristic(Characteristic.Model, "RCSwitch")
-//       .setCharacteristic(Characteristic.SerialNumber, "123-456-789");
-    
-//     let switchServices = this.switches.map(function(currentValue, index) { 
-//         let switchService = new Service.Switch(currentValue.name);
-//         return switchService.getCharacteristic(Characteristic.On)
-//           .on('get', this.getSwitchOnCharacteristic.bind(this, index))
-//           .on('set', this.setSwitchOnCharacteristic.bind(this, index));
-//     });
-       
-//     this.informationService = informationService;
-//     this.switchServices = switchServices;
-//     return [informationService] + switchServices;
-// };
-
 Platform.prototype = {
   getSwitchOnCharacteristic: function (next) {
     next(null, this.isOn);
   },
    
-  setSwitchOnCharacteristic: function (index, on, next) {
+  setSwitchOnCharacteristic: function (on, next) {
     if (this.isOn) {
       rcswitch.switchOff(this.groupId, this.switchId);
     } else {
