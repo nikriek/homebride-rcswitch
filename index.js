@@ -43,12 +43,12 @@ RCSwitch.prototype.getSwitchOnCharacteristic = function(next) {
   next(null, this.isOn);
 }
 
-RCSwitch.prototype.setSwitchOnCharacteristic = function(on, next) {
-  if (on) {
-    rcswitch.switchOff(this.groupId, this.switchId);
-  } else {
+RCSwitch.prototype.setSwitchOnCharacteristic = function(newState, next) {
+  if (newState) {
     rcswitch.switchOn(this.groupId, this.switchId);
+  } else {
+    rcswitch.switchOff(this.groupId, this.switchId);
   }
-  this.isOn = !on;
+  this.isOn = newState;
   next();
 }
