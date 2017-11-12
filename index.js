@@ -21,12 +21,22 @@ function Platform(log, config) {
   this.isOn = false;
 
   rcswitch.enableTransmit(this.pin);
+}
 
-  this.service = new Service.Switch(this.name);
+Platform.prototype.getServices = function () {
+    let informationService = new Service.AccessoryInformation();
+    informationService
+      .setCharacteristic(Characteristic.Manufacturer, "RCSwitch")
+      .setCharacteristic(Characteristic.Model, "RCSwitch")
+      .setCharacteristic(Characteristic.SerialNumber, "123-456-789");
+    
+    let switchService = new Service.Switch(this.name);
 
-  this.service.getCharacteristic(Characteristic.On)
-    .on('get', this.getSwitchOnCharacteristic.bind(this))
-    .on('set', this.setSwitchOnCharacteristic.bind(this))
+    switchService.getCharacteristic(Characteristic.On)
+      .on('get', this.getSwitchOnCharacteristic.bind(this))
+      .on('set', this.setSwitchOnCharacteristic.bind(this))
+
+    return [informationService, switchService];
 }
 
 Platform.prototype = {
@@ -35,12 +45,12 @@ Platform.prototype = {
   },
    
   setSwitchOnCharacteristic: function (on, next) {
-    if (this.isOn) {
+    if (on) {
       rcswitch.switchOff(this.groupId, this.switchId);
     } else {
       rcswitch.switchOn(this.groupId, this.switchId);
     }
-    this.isOn = !this.isOn;
+    this.isOn = !on;
     next();
   }
 }
