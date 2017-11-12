@@ -8,21 +8,29 @@ module.exports = function(homebridge) {
   Characteristic = homebridge.hap.Characteristic;
   UUIDGen = homebridge.hap.uuid;
   
-  homebridge.registerPlatform("homebridge-rcswitch", "RCSwitch", Platform, false);
+  homebridge.registerAccessory("homebridge-rcswitch", "RCSwitch", Platform);
 }
 
-function Platform(log, config, api) {
+function Platform(log, config) {
   this.log = log;
   this.config = config;
-  this.api = api;
   this.pin = config.pin['pin'] || 0;
-  this.switches = config.switches || [];
-  this.switchStates = Array(this.switches.length).fill(false);
+  this.name = config['name'];
+  this.groupId = config['group'];
+  this.switchId = config['switch'];
+  this.isOn = false;
+  this.configure();
 }
 
-Platform.prototype.configureAccessory = function (accessory) {
+Platform.prototype.configure = function () {
   this.log("Enable transmit on pin " + this.pin);
   rcswitch.enableTransmit(this.pin);
+
+  this.service = new Service.Switch(this.name);
+
+  this.service.getCharacteristic(Characteristic.On)
+    .on('get', this.getSwitchOnCharacteristic.bind(this))
+    .on('set', this.setSwitchOnCharacteristic.bind(this))
 }
 
 // Platform.prototype.getServices = function () {
@@ -44,21 +52,18 @@ Platform.prototype.configureAccessory = function (accessory) {
 //     return [informationService] + switchServices;
 // };
 
-// Platform.prototype = {
-//   getSwitchOnCharacteristic: function (index, next) {
-//     let isOn = this.switchStates[index];
-//     next(null, isOn);
-//   },
+Platform.prototype = {
+  getSwitchOnCharacteristic: function (next) {
+    next(null, this.isOn);
+  },
    
-//   setSwitchOnCharacteristic: function (index, on, next) {
-//     let isOn = this.switchStates[index];
-//     let currentSwitch = this.switches[index];
-//     if (isOn) {
-//       rcswitch.switchOff(currentSwitch.group, currentSwitch.switch);
-//     } else {
-//       rcswitch.switchOn(currentSwitch.group, currentSwitch.switch);
-//     }
-//     this.switchStates[index] = !isOn;
-//     next();
-//   }
-// };
+  setSwitchOnCharacteristic: function (index, on, next) {
+    if (this.isOn) {
+      rcswitch.switchOff(this.groupId, this.switchId);
+    } else {
+      rcswitch.switchOn(this.groupId, this.switchId);
+    }
+    this.isOn = !this.isOn;
+    next();
+  }
+}
