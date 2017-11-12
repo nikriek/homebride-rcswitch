@@ -21,6 +21,7 @@ function Platform(log, config, api) {
 }
 
 Platform.prototype.configureAccessory = function (accessory) {
+  this.log("Enable transmit on pin " + this.pin);
   rcswitch.enableTransmit(this.pin);
 }
 
